@@ -1,0 +1,9 @@
+api = "0.2"
+
+[buildpack]
+id = "org.cloudfoundry.buildpacks.legacy"
+version = "0.0.1"
+name = "Legacy CF Buildpack"
+
+[[stacks]]
+id = "io.buildpacks.stacks.bionic"

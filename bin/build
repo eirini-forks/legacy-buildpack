@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+DIR=$(dirname "$0")
+layersdir=$1
+
+cp -a . "/tmp/app"
+
+CF_STACK=cflinuxfs3 \
+  "$DIR/../lifecycle/builder" \
+  -buildDir /tmp/app \
+  -buildpackOrder https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.30/ruby-buildpack-cflinuxfs3-v1.8.30.zip
+
+rm -rf $PWD/*
+tar -xvf /tmp/droplet
+
+mkdir -p $layersdir/launcher/bin
+cp "$DIR/../lifecycle/cf-launcher" $layersdir/launcher/bin
+echo "launch = true" >$layersdir/launcher.toml
+
+cat >"$layersdir/launch.toml" <<EOL
+[[processes]]
+type = "web"
+command = "cf-launcher . '' ''"
+EOL

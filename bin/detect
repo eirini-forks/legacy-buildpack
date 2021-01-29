@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# we expect to be the only buildpack at this point
+exit 0
