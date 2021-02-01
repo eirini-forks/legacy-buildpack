@@ -4,22 +4,40 @@ set -eo pipefail
 DIR=$(dirname "$0")
 layersdir=$1
 
+# create build cache layer - copying to /tmp filesystem to avoid
+# cross-filesystem linking issues
+buildCacheLayer="$layersdir/buildcache"
+mkdir -p "$buildCacheLayer"
+echo "cache = true" >$buildCacheLayer.toml
+cp -a "$buildCacheLayer" /tmp/cache
+
+# copy app to /tmp filesystem to avoid linking issues
 cp -a . "/tmp/app"
 
+# invoke legacy builder
 CF_STACK=cflinuxfs3 \
   "$DIR/../lifecycle/builder" \
   -buildDir /tmp/app \
-  -buildpackOrder https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.30/ruby-buildpack-cflinuxfs3-v1.8.30.zip
+  -buildArtifactsCacheDir /tmp/cache \
+  -buildpackOrder https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.27/ruby-buildpack-cflinuxfs3-v1.8.27.zip
+# -buildpackOrder "file://$DIR/../buildpacks/ruby"
 
+# replace buildcache layer with current /tmp/cache contents
+rm -rf "$buildCacheLayer"
+cp -a /tmp/cache $buildCacheLayer
+
+# clean working dir and extract droplet into it
 rm -rf $PWD/*
-tar -xvf /tmp/droplet
+tar -xf /tmp/droplet
 
+# install legacy launcher into launcher layer
 mkdir -p $layersdir/launcher/bin
 cp "$DIR/../lifecycle/cf-launcher" $layersdir/launcher/bin
 echo "launch = true" >$layersdir/launcher.toml
 
+# configure cnb launcher
 cat >"$layersdir/launch.toml" <<EOL
 [[processes]]
 type = "web"
-command = "cf-launcher . '' ''"
+command = "cf-launcher 'app' '' ''"
 EOL
