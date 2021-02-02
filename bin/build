@@ -19,7 +19,7 @@ CF_STACK=cflinuxfs3 \
   "$DIR/../lifecycle/builder" \
   -buildDir /tmp/app \
   -buildArtifactsCacheDir /tmp/cache \
-  -buildpackOrder https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.27/ruby-buildpack-cflinuxfs3-v1.8.27.zip
+  -buildpackOrder https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.27/ruby-buildpack-cflinuxfs3-v1.8.27.zip,https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.41/nodejs-buildpack-cflinuxfs3-v1.7.41.zip,https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.25/go-buildpack-cflinuxfs3-v1.9.25.zip
 # -buildpackOrder "file://$DIR/../buildpacks/ruby"
 
 # replace buildcache layer with current /tmp/cache contents
