@@ -31,6 +31,12 @@ dropletLayer="$layersdir/droplet"
 mkdir -p "$dropletLayer"
 tar xf /tmp/droplet -C "$dropletLayer"
 
+cat >"$PWD/.profile" <<EOL
+export PATH=\$PATH:/workspace/app/bin
+source /workspace/profile.d/*
+cd /workspace/app
+EOL
+
 # clean working dir and copy droplet layer in, losing strange perms in the process
 rm -rf $PWD/*
 cp -a "$dropletLayer"/* .
@@ -40,9 +46,11 @@ mkdir -p $layersdir/launcher/bin
 cp "$DIR/../lifecycle/cf-launcher" $layersdir/launcher/bin
 echo "launch = true" >$layersdir/launcher.toml
 
+command="$(cat $PWD/app/Procfile | grep web | sed 's/web: //g')"
+
 # configure cnb launcher
 cat >"$layersdir/launch.toml" <<EOL
 [[processes]]
 type = "web"
-command = "cf-launcher 'app' '' ''"
+command = "$command"
 EOL
