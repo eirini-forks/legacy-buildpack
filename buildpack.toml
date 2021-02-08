@@ -2,7 +2,7 @@ api = "0.2"
 
 [buildpack]
 id = "org.cloudfoundry.buildpacks.legacy"
-version = "0.1.5"
+version = "0.1.6"
 name = "Legacy CF Buildpack"
 
 [[stacks]]

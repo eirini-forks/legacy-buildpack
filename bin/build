@@ -32,9 +32,23 @@ mkdir -p "$dropletLayer"
 tar xf /tmp/droplet -C "$dropletLayer"
 
 cat >"$PWD/.profile" <<EOL
+export DEPS_DIR=/workspace/deps
+export HOME=/workspace/app
 export PATH=\$PATH:/workspace/app/bin
-source /workspace/profile.d/*
-cd /workspace/app
+
+cd \$HOME
+
+if [ -n "\$(ls ../profile.d/* 2>/dev/null)" ]; then
+  for env_file in ../profile.d/*; do
+    source \$env_file
+  done
+fi
+
+if [ -n "\$(ls .profile.d/* 2>/dev/null)" ]; then
+  for env_file in .profile.d/*; do
+    source \$env_file
+  done
+fi
 EOL
 
 # clean working dir and copy droplet layer in, losing strange perms in the process
@@ -52,5 +66,5 @@ command="$(cat $PWD/app/Procfile | grep web | sed 's/web: //g')"
 cat >"$layersdir/launch.toml" <<EOL
 [[processes]]
 type = "web"
-command = "$command"
+command = "env; $command"
 EOL
