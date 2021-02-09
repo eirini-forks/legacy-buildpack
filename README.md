@@ -22,7 +22,7 @@ spec:
 
 ```
 
-The buildpack is configured by two environment variables - BUILDPACK_ORDER and SKIP_DETECT. Since the `cf buildpacks` family of commands now configure kpack instead of actually putting them in the blobstore, to override the default buildpacks, you need to either set them in staging-environment-variable-group or in the app manifest. For example:
+The buildpack is configured by two environment variables - `BUILDPACK_ORDER` and `SKIP_DETECT`. Since the `cf buildpacks` family of commands now configure kpack instead of actually putting them in the blobstore, to override the default buildpacks, you need to either set them in staging-environment-variable-group or in the app manifest. For example:
 
 ```shell
 cf set-staging-environment-variable-group '{"BUILDPACK_ORDER":"<buildpack1-url>,<buildpack2-url>,...", SKIP_DETECT: true}'
