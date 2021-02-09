@@ -59,11 +59,6 @@ EOL
 rm -rf $PWD/*
 cp -a "$dropletLayer"/* .
 
-# install legacy launcher into launcher layer
-mkdir -p $layersdir/launcher/bin
-cp "$DIR/../lifecycle/cf-launcher" $layersdir/launcher/bin
-echo "launch = true" >$layersdir/launcher.toml
-
 command="$(cat $PWD/staging_info.yml | tr -d '\n' | sed 's/.*"start_command"\s*:\s*"\(.*\)".*/\1/g')"
 
 # configure cnb launcher
