@@ -6,7 +6,7 @@ This is a simple wrapper buildpack for kpack, which runs all legacy cloudfoundry
 
 ## How to use the buildpack
 
-We created a wrapper buildpack which can be found [here](https://github.com/eirini-forks/legacy-buildpack). To build it and install it in a cf-for-k8s cluster run `./scripts/deploy.sh` in that repository. The script builds the buildpack, pushes the image and patches the ClusterStore on the cluster. The only manual step is to edit the Kpack Builder in the `cf-workloads-staging` namespace and replace all of the buildpacks there with our buildpack. It should look something like:
+To build it and install it in a cf-for-k8s cluster run `./scripts/deploy.sh` in that repository. The script builds the buildpack, pushes the image and patches the ClusterStore on the cluster. The only manual step is to edit the Kpack Builder in the `cf-workloads-staging` namespace and replace all of the buildpacks there with our buildpack. It should look something like:
 
 ```yaml
 apiVersion: kpack.io/v1alpha1
