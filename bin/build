@@ -17,14 +17,17 @@ cp -a "$buildCacheLayer" /tmp/cache
 # copy app to /tmp filesystem to avoid linking issues
 cp -a . "/tmp/app"
 
+if [[ "$SKIP_DETECT" == "true" ]]; then
+  skipDetect="-skipDetect "
+fi
+
 # invoke legacy builder
 CF_STACK=cflinuxfs3 \
   "$DIR/../lifecycle/builder" \
   -buildDir /tmp/app \
   -buildArtifactsCacheDir /tmp/cache \
   -buildpackOrder $BUILDPACK_ORDER \
-  -skipDetect $SKIP_DETECT
-# -buildpackOrder "file://$DIR/../buildpacks/ruby"
+  $skipDetect
 
 # replace buildcache layer with current /tmp/cache contents
 rm -rf "$buildCacheLayer"
