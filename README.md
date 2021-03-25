@@ -45,7 +45,7 @@ applications:
       SKIP_DETECT: true
 ```
 
-The default values are currently in the build script [here](https://github.com/eirini-forks/legacy-buildpack/blob/dec5649ba5442a62b0312536a2a37dc5fd788823/bin/build#L4-L5).
+The default values are currently in the build script [here](https://github.com/eirini-forks/legacy-buildpack/blob/f8e40dc7073fb9cba48e36b751c28c43774b69e6/bin/build#L4-L5).
 Note that this contains only the ruby, node, golang and static buildpacks used as a proof of concept.
 
 ## How it works
