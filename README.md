@@ -46,7 +46,7 @@ applications:
 ```
 
 The default values are currently in the build script [here](https://github.com/eirini-forks/legacy-buildpack/blob/dec5649ba5442a62b0312536a2a37dc5fd788823/bin/build#L4-L5).
-Note that this contains only the ruby, node and golang buildpacks used as a proof of concept.
+Note that this contains only the ruby, node, golang and static buildpacks used as a proof of concept.
 
 ## How it works
 

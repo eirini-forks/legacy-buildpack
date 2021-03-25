@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-BUILDPACK_ORDER=${BUILDPACK_ORDER:-"https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.27/ruby-buildpack-cflinuxfs3-v1.8.27.zip,https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.41/nodejs-buildpack-cflinuxfs3-v1.7.41.zip,https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.25/go-buildpack-cflinuxfs3-v1.9.25.zip"}
+BUILDPACK_ORDER=${BUILDPACK_ORDER:-"https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.27/ruby-buildpack-cflinuxfs3-v1.8.27.zip,https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.41/nodejs-buildpack-cflinuxfs3-v1.7.41.zip,https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.25/go-buildpack-cflinuxfs3-v1.9.25.zip,https://github.com/cloudfoundry/staticfile-buildpack/releases/download/v1.5.17/staticfile-buildpack-cflinuxfs3-v1.5.17.zip"}
 SKIP_DETECT=${SKIP_DETECT:-false}
 
 DIR=$(dirname "$0")
