@@ -8,15 +8,15 @@ BUILDPACK_IMAGE=eirini/legacy-buildpack
 
 patch-cluster-store() {
   local patch_spec
-  current_buildpack=$(kubectl get clusterstore cf-buildpack-store -o jsonpath='{.spec.sources[-1:].image}')
+  current_buildpack=$(kubectl get clusterstore tinypaas-cluster-store -o jsonpath='{.spec.sources[-1:].image}')
   if [[ "$current_buildpack" =~ "$BUILDPACK_IMAGE" ]]; then
-    sources_len=$(kubectl get clusterstore cf-buildpack-store -o json | jq '.spec.sources | length')
+    sources_len=$(kubectl get clusterstore tinypaas-cluster-store -o json | jq '.spec.sources | length')
     buildpack_index=$((sources_len - 1))
     patch_spec=$(printf '[{"op":"remove","path":"/spec/sources/%d"}]' "$buildpack_index")
-    kubectl patch clusterstore cf-buildpack-store --type "json" -p "$patch_spec"
+    kubectl patch clusterstore tinypaas-cluster-store --type "json" -p "$patch_spec"
   fi
   patch_spec=$(printf '[{"op":"add","path":"/spec/sources/-","value":{image: "%s@%s"}}]' "$BUILDPACK_IMAGE" "$buildpack_image_sha")
-  kubectl patch clusterstore cf-buildpack-store --type "json" -p "$patch_spec"
+  kubectl patch clusterstore tinypaas-cluster-store --type "json" -p "$patch_spec"
 }
 
 publish-buildpack() {
